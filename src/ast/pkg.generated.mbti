@@ -4,6 +4,7 @@ package "hanamizuno/fmfm/ast"
 import {
   "hanamizuno/fmfm/diagnostic",
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
@@ -14,26 +15,30 @@ pub const TrailStatusValues : String = "good, caution, impassable"
 pub fn parse_number(String) -> Double?
 
 // Errors
+#derive(Eq, @debug.Debug)
 pub(all) suberror DateTimeError {
   DateTimeError(String)
-} derive(Eq, @debug.Debug)
+}
 
 // Types and methods
+#derive(@debug.Debug)
 pub(all) enum Block {
   Markdown(Markdown)
   Waypoint(Waypoint)
   Hazard(Hazard)
   TrailCondition(TrailCondition)
   Unknown(UnknownDirective)
-} derive(@debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct Common {
   id : String?
   classes : Array[String]
   extra : Map[String, String]
   range : @diagnostic.Range
-} derive(@debug.Debug)
+}
 
+#derive(Eq, @debug.Debug)
 pub(all) struct DateTime {
   year : Int32
   month : Int32
@@ -44,36 +49,41 @@ pub(all) struct DateTime {
   nanosecond : Int32
   offset_minutes : Int32
   text : String
-} derive(Eq, @debug.Debug)
+}
 pub fn DateTime::compare(Self, Self) -> Int32
 pub fn DateTime::epoch_seconds(Self) -> Int64
 pub fn DateTime::parse(String) -> Self raise DateTimeError
 pub fn DateTime::to_string(Self) -> String
 pub impl Show for DateTime
 
+#derive(@debug.Debug)
 pub(all) struct Document {
   metadata : Metadata
   blocks : Array[Block]
-} derive(@debug.Debug)
+}
 
+#derive(Eq, @debug.Debug)
 pub(all) struct GeoPoint {
   latitude : Double
   longitude : Double
-} derive(Eq, @debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct Hazard {
   severity : Severity
   location : GeoPoint?
   observed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct Markdown {
   source : String
   range : @diagnostic.Range
-} derive(@debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct Metadata {
   format_version : String?
   kind : String
@@ -86,31 +96,35 @@ pub(all) struct Metadata {
   tags : Array[String]
   members : Array[String]
   license : String?
-  extra : Map[String, Json]
-} derive(@debug.Debug)
+  extra : Map[String, @json.Json]
+}
 pub fn Metadata::empty() -> Self
 
+#derive(Eq, @debug.Debug)
 pub(all) enum Severity {
   Info
   Caution
   Warning
   Danger
-} derive(Eq, @debug.Debug)
+}
 pub fn Severity::from_string(String) -> Self?
 pub fn Severity::to_string(Self) -> String
 pub impl Show for Severity
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Stats {
   distance_m : Double?
   ascent_m : Double?
   descent_m : Double?
-} derive(Eq, @debug.Debug)
+}
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Track {
   url : String
   format : String
-} derive(Eq, @debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct TrailCondition {
   status : TrailStatus
   section : String?
@@ -118,24 +132,27 @@ pub(all) struct TrailCondition {
   observed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
+#derive(Eq, @debug.Debug)
 pub(all) enum TrailStatus {
   Good
   Caution
   Impassable
-} derive(Eq, @debug.Debug)
+}
 pub fn TrailStatus::from_string(String) -> Self?
 pub fn TrailStatus::to_string(Self) -> String
 pub impl Show for TrailStatus
 
+#derive(@debug.Debug)
 pub(all) struct UnknownDirective {
   name : String
   attributes : Map[String, String]
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub(all) struct Waypoint {
   name : String
   location : GeoPoint?
@@ -144,7 +161,7 @@ pub(all) struct Waypoint {
   departed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
 // Type aliases
 

@@ -9,9 +9,9 @@ import {
 // Values
 pub const FormatVersion : String = "0.1"
 
-pub fn dump(@ast.Document, Array[@diagnostic.Diagnostic]) -> Json
+pub fn dump(@ast.Document, Array[@diagnostic.Diagnostic]) -> @moonbitlang/core/json.Json
 
-pub fn to_json(@ast.Document) -> Json
+pub fn to_json(@ast.Document) -> @moonbitlang/core/json.Json
 
 // Errors
 

@@ -2,18 +2,20 @@
 /// A location in the source text. `line` and `column` are 1-based and count
 /// Unicode code points; `offset` is 0-based and counts UTF-16 code units
 /// (the unit JavaScript and LSP use).
+#derive(Eq, Compare, ToJson, @debug.Debug)
 pub(all) struct Position {
   line : Int32
   column : Int32
   offset : Int32
-} derive(Eq, Compare, ToJson, @debug.Debug)
+}
 
 ///|
 /// A half-open span `[start, end)` in the source text.
+#derive(Eq, ToJson, @debug.Debug)
 pub(all) struct Range {
   start : Position
   end : Position
-} derive(Eq, ToJson, @debug.Debug)
+}
 
 ///|
 pub fn Range::point(pos : Position) -> Range {
@@ -29,10 +31,11 @@ pub fn Range::union(self : Range, other : Range) -> Range {
 }
 
 ///|
+#derive(Eq, @debug.Debug)
 pub(all) enum Level {
   Error
   Warning
-} derive(Eq, @debug.Debug)
+}
 
 ///|
 pub fn Level::to_string(self : Level) -> String {
@@ -56,13 +59,14 @@ pub impl ToJson for Level with fn to_json(self) {
 /// One problem found in a document. `code` is a stable kebab-case identifier
 /// listed in the specification; `message` starts lower-case and names the
 /// offending field. `suggestion`, when present, is a concrete replacement.
+#derive(Eq, ToJson, @debug.Debug)
 pub(all) struct Diagnostic {
   level : Level
   code : String
   message : String
   range : Range
   suggestion : String?
-} derive(Eq, ToJson, @debug.Debug)
+}
 
 ///|
 pub fn Diagnostic::error(
@@ -122,7 +126,7 @@ pub fn has_errors(diagnostics : Array[Diagnostic]) -> Bool {
 pub fn sort(diagnostics : Array[Diagnostic]) -> Array[Diagnostic] {
   let sorted = diagnostics.copy()
   sorted.sort_by((a, b) => {
-    let c = a.range.start.compare(b.range.start)
+    let c = Compare::compare(a.range.start, b.range.start)
     if c != 0 {
       c
     } else {

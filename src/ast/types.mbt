@@ -1,11 +1,12 @@
 ///|
 /// Hazard severity. The boundaries are defined in the specification (§4.4).
+#derive(Eq, @debug.Debug)
 pub(all) enum Severity {
   Info
   Caution
   Warning
   Danger
-} derive(Eq, @debug.Debug)
+}
 
 ///|
 pub fn Severity::to_string(self : Severity) -> String {
@@ -38,11 +39,12 @@ pub const SeverityValues : String = "info, caution, warning, danger"
 
 ///|
 /// Trail-condition status (spec §4.5).
+#derive(Eq, @debug.Debug)
 pub(all) enum TrailStatus {
   Good
   Caution
   Impassable
-} derive(Eq, @debug.Debug)
+}
 
 ///|
 pub fn TrailStatus::to_string(self : TrailStatus) -> String {
@@ -73,27 +75,31 @@ pub const TrailStatusValues : String = "good, caution, impassable"
 
 ///|
 /// WGS 84 coordinates in decimal degrees.
+#derive(Eq, @debug.Debug)
 pub(all) struct GeoPoint {
   latitude : Double
   longitude : Double
-} derive(Eq, @debug.Debug)
+}
 
 ///|
+#derive(Eq, @debug.Debug)
 pub(all) struct Track {
   url : String
   format : String
-} derive(Eq, @debug.Debug)
+}
 
 ///|
+#derive(Eq, @debug.Debug)
 pub(all) struct Stats {
   distance_m : Double?
   ascent_m : Double?
   descent_m : Double?
-} derive(Eq, @debug.Debug)
+}
 
 ///|
 /// Document-level metadata from the front matter (spec §2.2). Unknown keys are
 /// kept verbatim in `extra`.
+#derive(@debug.Debug)
 pub(all) struct Metadata {
   format_version : String?
   kind : String
@@ -107,7 +113,7 @@ pub(all) struct Metadata {
   members : Array[String]
   license : String?
   extra : Map[String, Json]
-} derive(@debug.Debug)
+}
 
 ///|
 pub fn Metadata::empty() -> Metadata {
@@ -129,21 +135,24 @@ pub fn Metadata::empty() -> Metadata {
 
 ///|
 /// A run of CommonMark prose, kept as source text (ADR-0001).
+#derive(@debug.Debug)
 pub(all) struct Markdown {
   source : String
   range : @diagnostic.Range
-} derive(@debug.Debug)
+}
 
 ///|
 /// Attributes every directive shares (spec §4.2) plus the unknown ones.
+#derive(@debug.Debug)
 pub(all) struct Common {
   id : String?
   classes : Array[String]
   extra : Map[String, String]
   range : @diagnostic.Range
-} derive(@debug.Debug)
+}
 
 ///|
+#derive(@debug.Debug)
 pub(all) struct Waypoint {
   name : String
   location : GeoPoint?
@@ -152,18 +161,20 @@ pub(all) struct Waypoint {
   departed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
 ///|
+#derive(@debug.Debug)
 pub(all) struct Hazard {
   severity : Severity
   location : GeoPoint?
   observed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
 ///|
+#derive(@debug.Debug)
 pub(all) struct TrailCondition {
   status : TrailStatus
   section : String?
@@ -171,30 +182,33 @@ pub(all) struct TrailCondition {
   observed_at : DateTime?
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
 ///|
 /// A directive whose name this version does not define. Preserved so that
 /// newer documents survive older tools (spec §4.6).
+#derive(@debug.Debug)
 pub(all) struct UnknownDirective {
   name : String
   attributes : Map[String, String]
   common : Common
   body : Array[Block]
-} derive(@debug.Debug)
+}
 
 ///|
+#derive(@debug.Debug)
 pub(all) enum Block {
   Markdown(Markdown)
   Waypoint(Waypoint)
   Hazard(Hazard)
   TrailCondition(TrailCondition)
   Unknown(UnknownDirective)
-} derive(@debug.Debug)
+}
 
 ///|
 /// The typed hike document: the only public data model of fmfm.
+#derive(@debug.Debug)
 pub(all) struct Document {
   metadata : Metadata
   blocks : Array[Block]
-} derive(@debug.Debug)
+}

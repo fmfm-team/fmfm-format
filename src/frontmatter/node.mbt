@@ -1,18 +1,20 @@
 ///|
 /// A position-aware tree for the admitted YAML subset (ADR-0004). Every scalar
 /// is a string; typing is the semantic stage's job.
+#derive(@debug.Debug)
 pub(all) enum Node {
   Scalar(String, @diagnostic.Range)
   Sequence(Array[Node], @diagnostic.Range)
   Mapping(Array[Entry], @diagnostic.Range)
-} derive(@debug.Debug)
+}
 
 ///|
+#derive(@debug.Debug)
 pub(all) struct Entry {
   key : String
   key_range : @diagnostic.Range
   value : Node
-} derive(@debug.Debug)
+}
 
 ///|
 pub fn Node::range(self : Node) -> @diagnostic.Range {

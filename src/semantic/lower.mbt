@@ -1,8 +1,9 @@
 ///|
+#derive(@debug.Debug)
 pub(all) struct LowerResult {
   document : @ast.Document
   diagnostics : Array[@diagnostic.Diagnostic]
-} derive(@debug.Debug)
+}
 
 ///|
 /// Collects diagnostics while lowering.
