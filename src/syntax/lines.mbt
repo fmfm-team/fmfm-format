@@ -49,7 +49,7 @@ fn position(line : Line, col : Int32) -> @diagnostic.Position {
   let clamped = if col > line.text.length() { line.text.length() } else { col }
   {
     line: line.index + 1,
-    column: line.text.char_length(end_offset=clamped) + 1,
+    column: line.text.char_length(end=clamped) + 1,
     offset: line.start + clamped,
   }
 }

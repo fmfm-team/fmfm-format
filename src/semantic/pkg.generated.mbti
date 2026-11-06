@@ -15,10 +15,11 @@ pub fn lower(@syntax.RawDocument, front_matter? : @frontmatter.Node) -> LowerRes
 // Errors
 
 // Types and methods
+#derive(@debug.Debug)
 pub(all) struct LowerResult {
   document : @ast.Document
   diagnostics : Array[@diagnostic.Diagnostic]
-} derive(@debug.Debug)
+}
 
 // Type aliases
 

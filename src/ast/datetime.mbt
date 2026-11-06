@@ -1,6 +1,7 @@
 ///|
 /// An RFC 3339 date-time with a mandatory UTC offset (spec §5). The original
 /// text is kept so exports reproduce what the author wrote.
+#derive(Eq, @debug.Debug)
 pub(all) struct DateTime {
   year : Int32
   month : Int32
@@ -13,12 +14,13 @@ pub(all) struct DateTime {
   /// UTC offset in minutes, e.g. `+09:00` is 540.
   offset_minutes : Int32
   text : String
-} derive(Eq, @debug.Debug)
+}
 
 ///|
+#derive(Eq, @debug.Debug)
 pub(all) suberror DateTimeError {
   DateTimeError(String)
-} derive(Eq, @debug.Debug)
+}
 
 ///|
 fn digits(s : String, at : Int32, count : Int32) -> Int32 raise DateTimeError {
